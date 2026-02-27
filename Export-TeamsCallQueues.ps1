@@ -446,7 +446,7 @@ foreach ($cq in $cqs) {
     if ($cq.DistributionLists) {
         $dlLines = $cq.DistributionLists | ForEach-Object { HtmlEncode (Resolve-Group $_) }
         if ($dlLines -and $dlLines.Count -gt 0) {
-            $agentBlocks += "<b>Distribution Lists:</b><br/>" + ($dlLines -join "<br/>")
+            $agentBlocks += "<b>Groups:</b><br/>" + ($dlLines -join "<br/>")
         }
     }
 
@@ -580,4 +580,5 @@ $($sections -join "`n")
 "@ | Out-File -FilePath $OutputPath -Encoding UTF8
 
 Write-Host "Report generated: $OutputPath" -ForegroundColor Green
+
 if ($Open) { Invoke-Item $OutputPath }
