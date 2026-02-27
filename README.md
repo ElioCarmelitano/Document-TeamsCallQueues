@@ -1,6 +1,6 @@
 Connect to Teams and ExchangeOnline PowerShell Modules before running.
 
-# Export-TeamsCallQueues
+# Document-TeamsCallQueues
 .SYNOPSIS
 Generates an HTML documentation report for all Microsoft Teams Call Queues.
 
@@ -17,23 +17,19 @@ The report includes:
  - Exceptions: Overflow (threshold, action, target, greeting) — each on its own line
  - Exceptions: Timeout (threshold, action, target, greeting) — each on its own line
  - Exception: No Agents (apply-to, action, target, greeting) — each on its own line
- - Callback Eligible (Enabled + detailed thresholds):
-       Enabled: Yes|No
-       After <seconds> seconds
-       More than <n> calls in queue
-       Calls to agent ratio greater than <ratio>
+ - Callback Eligible (Enabled + detailed thresholds)
  - Callback Message (TTS: <text> | AudioFile: <name> | None)
  - Callback Key (DTMF: 0–9, *, #)
  - Callback Fail Notification (friendly target)
- - Authorised Users (friendly names)
+ - Authorised Users (friendly DisplayName)
 
 TARGET RESOLUTION (best effort)
  - PSTN: strips 'tel:' and displays E.164
  - Call Queue: CQ name by Id
  - Auto Attendant: AA name by Id
  - Resource Account (ApplicationInstance): RA display name and, if mapped, the attached CQ/AA name
- - Group (Shared Voicemail / DL): Team/M365 Group display name where possible
- - User: DisplayName or UPN
+ - Group (Shared Voicemail / DL): Team/M365 Group display name where possible (Teams/EXO/Graph)
+ - User: DisplayName (falls back to UPN/Id)
  - Otherwise: shows the raw Id as “Unknown”
 
 REQUIREMENTS
@@ -49,21 +45,20 @@ REQUIREMENTS
 
 .PARAMETER OutputPath
 Full or relative path to the HTML report file.
-Default: .\Teams-CallQueues-Report-<timestamp>.html
+Default: .\Document-TeamsCallQueues-<timestamp>.html
 
 .PARAMETER Open
 If specified, opens the generated HTML report when complete.
 
 .EXAMPLE
-PS> .\Export-TeamsCallQueues.ps1
-Generates ".\Teams-CallQueues-Report-YYYYMMDD-HHmmss.html".
+PS> .\Document-TeamsCallQueues.ps1
+Generates ".\Document-TeamsCallQueues-YYYYMMDD-HHmmss.html".
 
 .EXAMPLE
-PS> .\Export-TeamsCallQueues.ps1 -OutputPath "C:\Temp\CQ-Report.html" -Open
+PS> .\Document-TeamsCallQueues.ps1 -OutputPath "C:\Temp\CQ-Report.html" -Open
 Writes the report to C:\Temp\CQ-Report.html and opens it in the default browser.
 
 .NOTES
  - Parser-safety: Hashtables use ';' between key/value pairs. Complex values are built in variables first.
  - Null-safety: All .ContainsKey / indexing operations guard against null/empty keys.
  - This script is read-only; it does not modify any tenant configuration.
-
