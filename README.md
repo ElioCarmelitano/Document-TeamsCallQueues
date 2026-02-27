@@ -1,3 +1,5 @@
+Connect to Teams and ExchangeOnline PowerShell Modules before running.
+
 # Export-TeamsCallQueues
 .SYNOPSIS
 Generates an HTML documentation report for all Microsoft Teams Call Queues.
